@@ -1,9 +1,9 @@
-const perPage = 5;
-const totalRecord = 51;
-const currentPage = 2;
-const size = 6;
-
-const resolvePagination = ({ perPage, totalRecord, currentPage, size }) => {
+export const resolvePagination = ({
+  perPage,
+  totalRecord,
+  currentPage,
+  size,
+}) => {
   const firstPage = 1;
   const lastPage = Math.ceil(totalRecord / perPage) || 1;
 
@@ -30,5 +30,3 @@ const resolvePagination = ({ perPage, totalRecord, currentPage, size }) => {
         : endPage,
   };
 };
-
-console.log(resolvePagination({ perPage, currentPage, totalRecord, size }));
