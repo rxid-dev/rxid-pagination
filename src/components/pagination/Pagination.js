@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { resolvePagination } from "./resolve-pagination";
 
-export const Pagination = ({ model }) => {
+export const Pagination = ({ model, onChangePage }) => {
   const [state, setState] = useState({
     currentPage: model.currentPage,
     pagination: {},
@@ -22,30 +22,31 @@ export const Pagination = ({ model }) => {
     }));
   }, [model.totalRecord, state.currentPage]);
 
-  const handleChangePage = (currentPage) => {
-    if (state.currentPage === currentPage) return;
+  const setCurrentPage = (currentPage) => {
     setState((state) => ({
       ...state,
       currentPage,
     }));
+    if (onChangePage) {
+      onChangePage(currentPage);
+    }
+  };
+
+  const handleChangePage = (currentPage) => {
+    if (state.currentPage === currentPage) return;
+    setCurrentPage(currentPage);
   };
 
   const handleBackPage = () => {
     const currentPage = state.currentPage - 1;
     if (currentPage < state.pagination.firstPage) return;
-    setState((state) => ({
-      ...state,
-      currentPage,
-    }));
+    setCurrentPage(currentPage);
   };
 
   const handleNextPage = () => {
     const currentPage = state.currentPage + 1;
     if (currentPage > state.pagination.lastPage) return;
-    setState((state) => ({
-      ...state,
-      currentPage,
-    }));
+    setCurrentPage(currentPage);
   };
 
   return (

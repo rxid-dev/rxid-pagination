@@ -11,6 +11,10 @@ function App() {
     pagination.setTotalRecord(totalRecord);
   };
 
+  const handleOnChangePage = (currentPage) => {
+    console.log(currentPage);
+  };
+
   return (
     <div className="container p-5">
       <h1>React Pagination Tutorial</h1>
@@ -24,7 +28,7 @@ function App() {
       </button>
 
       <div className="text-end">
-        <Pagination model={pagination} />
+        <Pagination model={pagination} onChangePage={handleOnChangePage} />
       </div>
     </div>
   );
