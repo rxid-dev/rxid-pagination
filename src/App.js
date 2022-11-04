@@ -1,23 +1,16 @@
-import logo from './logo.svg';
-import './App.css';
+import "@fortawesome/fontawesome-free/css/all.css";
+import "bootstrap/dist/css/bootstrap.css";
+import "./App.css";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container p-5">
+      <h4>React Pagination Tutorial</h4>
+      <p>Create reusable pagination component on react app</p>
+      <button className="btn btn-primary">
+        <em className="fas fa-plus me-2"></em>
+        Add
+      </button>
     </div>
   );
 }
