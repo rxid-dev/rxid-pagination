@@ -1,5 +1,6 @@
 import "@fortawesome/fontawesome-free/css/all.css";
 import "bootstrap/dist/css/bootstrap.css";
+import React from "react";
 import "./App.css";
 import { Pagination, usePagination } from "./components/pagination";
 
@@ -11,7 +12,7 @@ function App() {
     pagination.setTotalRecord(totalRecord);
   };
 
-  const handleOnChangePage = (currentPage) => {
+  const handleOnChangePage = (currentPage: number) => {
     console.log(currentPage);
   };
 

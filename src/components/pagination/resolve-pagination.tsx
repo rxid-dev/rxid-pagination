@@ -1,9 +1,8 @@
-const perPage = 5;
-const totalRecord = 51;
-const currentPage = 2;
-const size = 6;
+import { Pagination } from "./domain/pagination";
+import { PaginationModel } from "./models/pagination.model";
 
-const resolvePagination = ({ perPage, totalRecord, currentPage, size }) => {
+export const resolvePagination = (props: PaginationModel): Pagination => {
+  const { totalRecord, perPage, size, currentPage } = props;
   const firstPage = 1;
   const lastPage = Math.ceil(totalRecord / perPage) || 1;
 
@@ -11,7 +10,7 @@ const resolvePagination = ({ perPage, totalRecord, currentPage, size }) => {
     currentPage - Math.floor(size / 2) + (size % 2 === 0 ? 1 : 0);
   const endPage = currentPage + Math.floor(size / 2);
 
-  return {
+  const pagination: Pagination = {
     firstPage,
     lastPage,
     startPage:
@@ -28,7 +27,12 @@ const resolvePagination = ({ perPage, totalRecord, currentPage, size }) => {
           ? lastPage
           : size
         : endPage,
+    list: [],
   };
-};
 
-console.log(resolvePagination({ perPage, currentPage, totalRecord, size }));
+  pagination.list = Array(pagination.endPage - pagination.startPage + 1)
+    .fill(0)
+    .map((val, index) => val + index + pagination.startPage);
+
+  return pagination;
+};
