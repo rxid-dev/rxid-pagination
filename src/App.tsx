@@ -2,7 +2,7 @@ import "@fortawesome/fontawesome-free/css/all.css";
 import "bootstrap/dist/css/bootstrap.css";
 import React from "react";
 import "./App.css";
-import { Pagination, usePagination } from "./components/pagination";
+import { RxidPagination, usePagination } from "./components/pagination";
 
 function App() {
   const pagination = usePagination({ perPage: 5, totalRecord: 99 });
@@ -29,7 +29,7 @@ function App() {
       </button>
 
       <div className="text-end">
-        <Pagination model={pagination} onChangePage={handleOnChangePage} />
+        <RxidPagination model={pagination} onChangePage={handleOnChangePage} />
       </div>
     </div>
   );
