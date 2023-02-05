@@ -1,7 +1,7 @@
-import { Pagination } from "./domain/pagination";
-import { PaginationModel } from "./models/pagination.model";
+import { Pagination } from "./domain/Pagination";
+import { PaginationProps } from "./interfaces/PaginationProps";
 
-export const resolvePagination = (props: PaginationModel): Pagination => {
+export const resolvePagination = (props: PaginationProps): Pagination => {
   const { totalRecord, perPage, size, currentPage } = props;
   const firstPage = 1;
   const lastPage = Math.ceil(totalRecord / perPage) || 1;

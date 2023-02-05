@@ -1,34 +1,29 @@
 import React, { useEffect, useState } from "react";
-import { Pagination } from "./domain/pagination";
-import { PaginationModel } from "./models/pagination.model";
+import { Pagination } from "./domain/Pagination";
+import { PaginationProps } from "./interfaces/PaginationProps";
 import { resolvePagination } from "./resolve-pagination";
 import "./RxidPagination.scss";
-interface Props {
-  model: PaginationModel;
+interface Props extends PaginationProps {
   onChangePage: (page: number) => void;
 }
 
 export const RxidPagination = (props: Props) => {
-  const { model, onChangePage } = props;
+  const { onChangePage, ...model } = props;
   const [state, setState] = useState({
-    currentPage: model.currentPage,
+    currentPage: model.currentPage || 1,
     pagination: Pagination.createEmpty(),
-    length: 0,
   });
 
   useEffect(() => {
     const pagination = resolvePagination({
-      perPage: model.perPage,
-      totalRecord: model.totalRecord,
+      ...model,
       currentPage: state.currentPage,
-      size: model.size,
     });
     setState((state) => ({
       ...state,
       pagination,
-      length: pagination.endPage - (pagination.startPage - 1),
     }));
-  }, [model.totalRecord, state.currentPage]);
+  }, [model.totalRecord, state.currentPage, model.perPage]);
 
   const setCurrentPage = (currentPage: number) => {
     setState((state) => ({

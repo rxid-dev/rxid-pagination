@@ -1,12 +1,14 @@
 import { useState } from "react";
-import { PaginationProps } from "./interfaces/pagination-props";
-import { PaginationModel } from "./models/pagination.model";
+import { PaginationProps } from "./interfaces/PaginationProps";
 
-interface Model extends PaginationModel {
-  setTotalRecord: (totalRecord: number) => void;
+interface Props {
+  perPage?: number;
+  currentPage?: number;
+  size?: number;
+  totalRecord?: number;
 }
 
-export const usePagination = (props: PaginationProps): Model => {
+export const usePagination = (props: Props): PaginationProps => {
   const { perPage, currentPage, size, totalRecord } = props;
   const [state, setState] = useState({
     perPage: perPage || 10,
@@ -15,12 +17,19 @@ export const usePagination = (props: PaginationProps): Model => {
     totalRecord: totalRecord || 0,
   });
 
-  const setTotalRecord = (totalRecord: number) => {
+  const setTotalRecord = (totalRecord: number): void => {
     setState((state) => ({
       ...state,
       totalRecord,
     }));
   };
 
-  return { ...state, setTotalRecord };
+  const changePerPage = (perPage: number): void => {
+    setState((state) => ({
+      ...state,
+      perPage,
+    }));
+  };
+
+  return { ...state, setTotalRecord, changePerPage };
 };
