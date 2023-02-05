@@ -1,35 +1,23 @@
 import "@fortawesome/fontawesome-free/css/all.css";
 import "bootstrap/dist/css/bootstrap.css";
-import React, { useState } from "react";
+import React from "react";
 import "./App.css";
+import { Example } from "./components/example";
 import { RxidPagination, usePagination } from "./components/pagination";
 
 function App() {
   const pagination = usePagination({ perPage: 5, totalRecord: 99 });
-
-  const [current, setCurrent] = useState(0);
 
   const handleChangeTotalRecord = () => {
     const totalRecord = Math.ceil(Math.random() * 100);
     pagination.setTotalRecord(totalRecord);
   };
 
-  const handleOnChangePage = (currentPage: number) => {
-    console.log(currentPage);
-  };
-
-  const handleChangePerPage = () => {
-    const perPages = [5, 10, 25];
-    const position = (current + 1) % 3;
-    pagination.changePerPage(perPages[position]);
-    setCurrent(position);
-  };
-
   return (
     <div className="container p-5">
       <h1>React Pagination Tutorial</h1>
       <p>Create reusable pagination component on react app</p>
-
+      <Example />
       <button
         className="btn btn-primary mb-4 me-2"
         onClick={handleChangeTotalRecord}
@@ -37,13 +25,19 @@ function App() {
         Change Total Record
       </button>
 
-      <button className="btn btn-primary mb-4" onClick={handleChangePerPage}>
-        Change Per Page{" "}
-        <div className="badge bg-warning">{pagination.perPage}</div>
-      </button>
+      <select
+        className="form-select mb-4"
+        onChange={(e) => {
+          pagination.changePerPage(+e.target.value);
+        }}
+      >
+        <option value={5}>5</option>
+        <option value={10}>10</option>
+        <option value={25}>25</option>
+      </select>
 
       <div className="text-end">
-        <RxidPagination {...pagination} onChangePage={handleOnChangePage} />
+        <RxidPagination {...pagination} />
       </div>
     </div>
   );

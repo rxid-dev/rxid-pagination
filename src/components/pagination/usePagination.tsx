@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef } from "react";
 import { PaginationProps } from "./interfaces/PaginationProps";
 
 interface Props {
@@ -9,27 +9,17 @@ interface Props {
 }
 
 export const usePagination = (props: Props): PaginationProps => {
-  const { perPage, currentPage, size, totalRecord } = props;
-  const [state, setState] = useState({
-    perPage: perPage || 10,
-    currentPage: currentPage || 1,
-    size: size || 5,
-    totalRecord: totalRecord || 0,
-  });
+  const ref = useRef<any>();
 
   const setTotalRecord = (totalRecord: number): void => {
-    setState((state) => ({
-      ...state,
-      totalRecord,
-    }));
+    if (!ref.current) return;
+    ref.current.setTotalRecord(totalRecord);
   };
 
-  const changePerPage = (perPage: number): void => {
-    setState((state) => ({
-      ...state,
-      perPage,
-    }));
+  const changePerPage = (changePerPage: number): void => {
+    if (!ref.current) return;
+    ref.current.changePerPage(changePerPage);
   };
 
-  return { ...state, setTotalRecord, changePerPage };
+  return { ...props, setTotalRecord, changePerPage, ref };
 };
