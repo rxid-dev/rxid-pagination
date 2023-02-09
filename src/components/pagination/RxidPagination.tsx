@@ -1,4 +1,4 @@
-import React, { useEffect, useImperativeHandle, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Pagination } from "./domain/Pagination";
 import { PaginationProps } from "./interfaces/PaginationProps";
 import { resolvePagination } from "./resolve-pagination";
@@ -7,32 +7,17 @@ interface Props extends PaginationProps {
   onChangePage?: (page: number) => void;
 }
 
-export const RxidPagination = React.forwardRef((props: Props, ref: any) => {
+export const RxidPagination = (props: Props) => {
   const { onChangePage, ...model } = props;
 
-  const [state, setState] = useState(Pagination.create(model));
+  const [state, setState] = useState(Pagination.createEmpty());
 
   useEffect(() => {
     reloadState();
-  }, [model.totalRecord, state.currentPage, model.perPage]);
-
-  useImperativeHandle(
-    ref,
-    () => ({
-      setTotalRecord: (totalRecord: number) => {
-        state.totalRecord = totalRecord;
-        reloadState();
-      },
-      changePerPage: (perPage: number) => {
-        state.perPage = perPage;
-        reloadState();
-      },
-    }),
-    []
-  );
+  }, [model.totalRecord, model.currentPage, model.perPage]);
 
   const reloadState = () => {
-    const pagination = resolvePagination(state);
+    const pagination = resolvePagination(props);
     setState((state) => ({
       ...state,
       ...pagination,
@@ -40,10 +25,7 @@ export const RxidPagination = React.forwardRef((props: Props, ref: any) => {
   };
 
   const setCurrentPage = (currentPage: number) => {
-    setState((state) => ({
-      ...state,
-      currentPage,
-    }));
+    props.setCurrentPage(currentPage);
     if (onChangePage) {
       onChangePage(currentPage);
     }
@@ -168,4 +150,4 @@ export const RxidPagination = React.forwardRef((props: Props, ref: any) => {
       </li>
     </ul>
   );
-});
+};
